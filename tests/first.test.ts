@@ -85,7 +85,7 @@ class MockCandleFetcher {
     async fetchCandles(symbol: string, interval: number, limit: number): Promise<TickerCandle[] | null> {
 
 
-        const currentMinute = Math.floor(Date.now()/60000);
+        const currentMinute = Math.floor((Date.now()-1)/60000);
         const currentMinuteSecondOpen = currentMinute*60000;
 
         return Promise.resolve([
@@ -118,19 +118,8 @@ test(
     'cryptoBeep.getLatestClosedCandle()',
     async () => {
 
-        const kuCoin: CandleFetcher = new KuCoin(
-            new HttpClient(
-                { 
-                    cache: new CacheViaNothing()
-                }
-            ),
-            {
-                logger: console
-            }
-        );
-
         const beep = new CryptoBeep(
-            kuCoin,
+            new MockCandleFetcher(),
             'BTC-USDT', // symbol
             1, // 1 minute candle
             {
@@ -149,5 +138,46 @@ test(
         console.log(candle);
         expect(candle.close).not.toBeFalsy();
         expect(candle.open).not.toBeFalsy();
+    }
+);
+
+
+
+class MockPlayer {
+    playedSound:string[] = [];
+    play(
+        file: string,
+        errorHandler: () => void,
+    ) {
+        this.playedSound.push(file);
+        // const actualPlayer = require('play-sound')();
+        // actualPlayer.play(`./${file}`, (error) => {});
+    }
+}
+
+
+
+test(
+    'cryptoBeep.beep()',
+    async () => {
+
+        const player = new MockPlayer();
+
+        const expectedSound = 'assets/up.wav';
+
+        const beep = new CryptoBeep(
+            new MockCandleFetcher(),
+            'BTC-USDT', // symbol
+            1, // 1 minute candle
+            {
+                up: expectedSound,
+                down: 'assets/down.wav',
+                player: player
+            }
+        );
+
+        await beep.beep();
+
+        expect(player.playedSound).toContain(expectedSound);
     }
 );

@@ -6,18 +6,26 @@ export class CryptoBeep {
     private candleFetcher: CandleFetcher;
     private symbol: string;
     private interval: number;
-    private options: { up: string, down: string };
+    private player;
+    private up: string;
+    private down: string;
     
     constructor(
         candleFetcher: CandleFetcher,
         symbol: string,
         interval: number,
-        options: { up: string, down: string }
+        options: { 
+            up: string, 
+            down: string
+            player: any
+        }
     ) {
         this.candleFetcher = candleFetcher;
         this.symbol = symbol;
         this.interval = interval;
-        this.options = options;
+        this.up = options.up;
+        this.down = options.down;
+        this.player = options.player ?? require('play-sound');
     }
     
 
@@ -37,5 +45,29 @@ export class CryptoBeep {
                 return candles[1];
             }
         )
+    }
+
+    beep() {
+        return this
+            .getLatestClosedCandle()
+            .then(
+                (latestCandle: TickerCandle) => {
+                    if (!latestCandle) {
+                        return;
+                    }
+                    
+                    if (latestCandle.close > latestCandle.open) {
+                        this.player.play(
+                            this.up
+                        );
+                    }
+                    /*
+                    if (latestCandle.close < latestCandle.open) {
+                        this.player.play(
+                            this.down
+                        )
+                    }*/
+                }
+            )
     }
 }
