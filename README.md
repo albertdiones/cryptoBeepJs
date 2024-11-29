@@ -20,10 +20,10 @@ const beep = new CryptoBeep(
 ```
 
 Todos:
- * [ ] Create first test
+ * [x] Create first test
  * [x] Dep: heartbeep
- * [ ] Dev Dep: KuCoin
- * [ ] Find sound (freesound.org??)
- * [ ] Test cryptoBeep construct(fetcher: CandleFetcher, symbol: string, interval: number)
- * [ ] Test: cryptoBeep.getLatestClosedCandle()
- * [ ] Test: beep()
+ * [x] Dev Dep: KuCoin
+ * [x] Find sound (freesound.org??)
+ * [x] Test cryptoBeep construct(fetcher: CandleFetcher, symbol: string, interval: number)
+ * [x] Test: cryptoBeep.getLatestClosedCandle()
+ * [x] Test: beep()
