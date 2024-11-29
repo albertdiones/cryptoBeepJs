@@ -1,0 +1,19 @@
+{
+    "name": "cryptoBeepJs",
+    "module": "index.ts",
+    "type": "module",
+    "scripts": {
+      "loop-test": "while true; do bun test --timeout=20000; sleep 5; done",
+      "loop-validate": "while true; do bun test --timeout=20000; tsc --noEmit --pretty --skipLibCheck; sleep 5; done",
+    },
+    "dependencies": {
+        "tradeexchanges": "https://github.com/albertdiones/tradeExchanges.git"
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "jest": "^29.7.0"
+    },
+    "peerDependencies": {
+      "typescript": "^5.0.0"
+    }
+  }
