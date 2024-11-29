@@ -2,8 +2,8 @@
 
 
 Deps:
- # CandleFetcher from tradeExchanges lib from github
- # One of the exchanges implement tradeExchanges lib from github
+ * CandleFetcher from tradeExchanges lib from github
+ * One of the exchanges implement tradeExchanges lib from github
 
 
 
