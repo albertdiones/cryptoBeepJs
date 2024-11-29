@@ -18,3 +18,12 @@ const beep = new CryptoBeep(
     }
 );
 ```
+
+Todos:
+ * [ ] Create first test
+ * [ ] Dep: heartbeep
+ * [ ] Dev Dep: KuCoin
+ * [ ] Find sound (freesound.org??)
+ * [ ] Test cryptoBeep construct(fetcher: CandleFetcher, symbol: string, interval: number)
+ * [ ] Test: cryptoBeep.getLatestClosedCandle()
+ * [ ] Test: beep()
