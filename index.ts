@@ -16,16 +16,16 @@ export class CryptoBeep {
         symbol: string,
         interval: number,
         options: { 
-            up: string, 
-            down: string
+            up?: string, 
+            down?: string
             player?: any
         } = {}
     ) {
         this.candleFetcher = candleFetcher;
         this.symbol = symbol;
         this.interval = interval;
-        this.up = options.up;
-        this.down = options.down;
+        this.up = options.up ?? '../assets/up.wav';
+        this.down = options.down ?? '../assets/down.wav';
         this.player = options.player ?? require('play-sound')();
     }
     
