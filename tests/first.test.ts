@@ -33,6 +33,7 @@ test(
         );
         const beep = new CryptoBeep(
             kuCoin,
+            'BTC-USDT', // symbol
             1, // 1 minute candle
             {
                 up: 'assets/up.wav',
