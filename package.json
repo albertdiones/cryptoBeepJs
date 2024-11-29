@@ -4,14 +4,16 @@
     "type": "module",
     "scripts": {
       "loop-test": "while true; do bun test --timeout=20000; sleep 5; done",
-      "loop-validate": "while true; do bun test --timeout=20000; tsc --noEmit --pretty --skipLibCheck; sleep 5; done",
+      "loop-validate": "while true; do bun test --timeout=20000; tsc --noEmit --pretty --skipLibCheck; sleep 5; done"
     },
     "dependencies": {
-        "tradeexchanges": "https://github.com/albertdiones/tradeExchanges.git"
+        "tradeexchanges": "https://github.com/albertdiones/tradeExchanges.git",
+        "heartbeep": "https://github.com/albertdiones/heartbeep.git"
     },
     "devDependencies": {
         "@types/bun": "latest",
-        "jest": "^29.7.0"
+        "jest": "^29.7.0",        
+        "tradeexchanges-KuCoin": "https://github.com/albertdiones/tradeExchange-KuCoin.git"
     },
     "peerDependencies": {
       "typescript": "^5.0.0"
