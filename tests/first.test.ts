@@ -240,3 +240,30 @@ test(
         expect(player.playedSound).toContain(expectedSound);
     }
 );
+
+
+
+test(
+    'cryptoBeep.getDownTime()',
+    async () => {
+        const beep = new CryptoBeep(
+            new MockCandleFetcherDown(),
+            'BTC-USDT', // symbol
+            1, // 1 minute candle
+            {
+                up: 'assets/up.wav',
+                down:  'assets/down.wav',
+                player: new MockPlayer()
+            }
+        );
+
+        const downtime = beep.getDownTime(
+            1732851959001
+        );
+
+        expect(downtime).toBe(1999);
+    }
+);
+
+
+

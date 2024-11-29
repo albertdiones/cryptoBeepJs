@@ -70,4 +70,15 @@ export class CryptoBeep {
                 }
             )
     }
+
+    // gets the number of milliseconds to wait for the current candle to close
+    getDownTime(currentTime: number): number {
+        const intervalSeconds = this.interval*60000;
+
+        return 1000 + (
+            intervalSeconds
+        ) - (
+            currentTime % intervalSeconds
+        );
+    }
 }
