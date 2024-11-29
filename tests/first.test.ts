@@ -83,6 +83,11 @@ test(
 
 class MockCandleFetcher {
     async fetchCandles(symbol: string, interval: number, limit: number): Promise<TickerCandle[] | null> {
+
+
+        const currentMinute = Math.floor(Date.now()/60000);
+        const currentMinuteSecondOpen = currentMinute*60000;
+
         return Promise.resolve([
             {
                 open: 96820.5,
@@ -91,8 +96,8 @@ class MockCandleFetcher {
                 close: 96824.8,
                 base_volume: 0.56790463,
                 quote_volume: 54985.496884781,
-                open_timestamp: 1732877820000,
-                close_timestamp: 1732877879999,
+                open_timestamp: currentMinuteSecondOpen,
+                close_timestamp: currentMinuteSecondOpen+59999,
             },
             {
                 open: 96820.5,
@@ -101,8 +106,8 @@ class MockCandleFetcher {
                 close: 96824.8,
                 base_volume: 0.56790463,
                 quote_volume: 54985.496884781,
-                open_timestamp: 1732877820000,
-                close_timestamp: 1732877879999,
+                open_timestamp: currentMinuteSecondOpen-60000,
+                close_timestamp: currentMinuteSecondOpen-1,
             }
         ]);
     }
