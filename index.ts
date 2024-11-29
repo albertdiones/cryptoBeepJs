@@ -1,5 +1,6 @@
 
 import type { CandleFetcher } from 'tradeexchanges';
+import type { Candle, TickerCandle } from 'tradeexchanges/tradingCandles';
 
 export class CryptoBeep {
     private candleFetcher: CandleFetcher;
@@ -19,5 +20,22 @@ export class CryptoBeep {
         this.options = options;
     }
     
-    
+
+    async getLatestClosedCandle(): Promise<TickerCandle | null> {
+        return this.candleFetcher.fetchCandles(
+            this.symbol,
+            this.interval,
+            2
+        ).then(
+            (candles: TickerCandle[] | null) => {
+                if (!candles) {
+                    return null;
+                }
+                if (candles[0].close_timestamp <= Date.now()) {
+                    return candles[0];
+                }
+                return candles[1];
+            }
+        )
+    }
 }
