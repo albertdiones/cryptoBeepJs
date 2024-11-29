@@ -2,7 +2,7 @@ import { test, expect } from '@jest/globals'
 import type { CandleFetcher } from 'tradeexchanges';
 import KuCoin from 'tradeexchanges-KuCoin/kucoin';
 import HttpClient from 'nonChalantJs'
-import { CryptoBeep } from '..';
+import { CryptoBeep } from './index.ts';
 
 export class CacheViaNothing {
     async getItem(key: string): Promise<string | null> {
@@ -33,8 +33,8 @@ const beep = new CryptoBeep(
     1, // 1 minute candle
     {
         up: 'assets/up.wav',
-        down: 'assets/down.wav',
+        down: 'assets/down.ogg',
     }
 );
 
-beep.beep();
+await beep.watch();

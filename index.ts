@@ -1,4 +1,5 @@
 
+import Repeater from 'add_repeater';
 import type { CandleFetcher } from 'tradeexchanges';
 import type { Candle, TickerCandle } from 'tradeexchanges/tradingCandles';
 
@@ -17,15 +18,15 @@ export class CryptoBeep {
         options: { 
             up: string, 
             down: string
-            player: any
-        }
+            player?: any
+        } = {}
     ) {
         this.candleFetcher = candleFetcher;
         this.symbol = symbol;
         this.interval = interval;
         this.up = options.up;
         this.down = options.down;
-        this.player = options.player ?? require('play-sound');
+        this.player = options.player ?? require('play-sound')();
     }
     
 
@@ -79,6 +80,26 @@ export class CryptoBeep {
             intervalSeconds
         ) - (
             currentTime % intervalSeconds
+        );
+    }
+
+    watch() {
+        return new Repeater(
+            () => {
+                const downtime = this.getDownTime(Date.now());
+
+                this.beep();
+
+                return Bun.sleep(downtime)
+                    .then(
+                        () => {
+                            this.beep()
+                        }
+                    );
+            }
+        ).continuous(
+            (this.interval*60000)-1000,
+            null
         );
     }
 }
