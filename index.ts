@@ -61,12 +61,12 @@ export class CryptoBeep {
                             this.up
                         );
                     }
-                    /*
                     if (latestCandle.close < latestCandle.open) {
                         this.player.play(
                             this.down
                         )
-                    }*/
+                    }
+                    // open and close is equal? should it up or down???
                 }
             )
     }

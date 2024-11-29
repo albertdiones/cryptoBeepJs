@@ -181,3 +181,62 @@ test(
         expect(player.playedSound).toContain(expectedSound);
     }
 );
+
+
+class MockCandleFetcherDown {
+    async fetchCandles(symbol: string, interval: number, limit: number): Promise<TickerCandle[] | null> {
+
+
+        const currentMinute = Math.floor((Date.now()-1)/60000);
+        const currentMinuteSecondOpen = currentMinute*60000;
+
+        return Promise.resolve([
+            {
+                open: 96820.5,
+                high: 96824.9,
+                low: 96820.5,
+                close: 96824.8,
+                base_volume: 0.56790463,
+                quote_volume: 54985.496884781,
+                open_timestamp: currentMinuteSecondOpen,
+                close_timestamp: currentMinuteSecondOpen+59999,
+            },
+            {
+                open: 96824.8,
+                high: 96824.9,
+                low: 96820.5,
+                close: 96720.5,
+                base_volume: 0.56790463,
+                quote_volume: 54985.496884781,
+                open_timestamp: currentMinuteSecondOpen-60000,
+                close_timestamp: currentMinuteSecondOpen-1,
+            }
+        ]);
+    }
+}
+
+
+test(
+    'cryptoBeep.beep() down',
+    async () => {
+
+        const player = new MockPlayer();
+
+        const expectedSound = 'assets/down.wav';
+
+        const beep = new CryptoBeep(
+            new MockCandleFetcherDown(),
+            'BTC-USDT', // symbol
+            1, // 1 minute candle
+            {
+                up: 'assets/up.wav',
+                down: expectedSound,
+                player: player
+            }
+        );
+
+        await beep.beep();
+
+        expect(player.playedSound).toContain(expectedSound);
+    }
+);
